@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jai Shri Ram</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #fde9ea, #fff6de, #e6f0ff);
+      padding: 20px;
+    }
+
+    .card {
+      max-width: 900px;
+      width: 100%;
+      background: #fffdf8;
+      border-radius: 32px;
+      padding: 56px 72px 40px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-heart {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 24px;
+      border-radius: 50%;
+      background: #ffe5dd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-heart::before {
+      content: "♥";
+      color: #e46845;
+      font-size: 32px;
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: 48px;
+      letter-spacing: 1px;
+      color: #3a2721;
+      margin-bottom: 20px;
+    }
+
+    .subtitle {
+      max-width: 640px;
+      margin: 0 auto 40px;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #7b6a63;
+    }
+
+    .subtitle q {
+      quotes: "“" "”" "‘" "’";
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .pill {
+      width: 200px;
+      padding: 18px 12px;
+      border-radius: 18px;
+      background: #fff3e3;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .pill-title {
+      font-weight: 700;
+      color: #c05a22;
+      margin-bottom: 6px;
+      font-size: 18px;
+    }
+
+    .pill-text {
+      font-size: 13px;
+      color: #8c7669;
+    }
+
+    .bottom-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+      margin-top: 10px;
+    }
+
+    .btn-main {
+      padding: 12px 32px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: #f47b3b;
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      box-shadow: 0 14px 28px rgba(244, 123, 59, 0.4);
+    }
+
+    .btn-ghost {
+      padding: 11px 26px;
+      border-radius: 999px;
+      border: 1px solid #e3c4a4;
+      background: rgba(255, 255, 255, 0.85);
+      color: #a26b38;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        padding: 32px 20px 28px;
+        border-radius: 24px;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      .subtitle {
+        font-size: 16px;
+      }
+
+      .pill {
+        width: 100%;
+        max-width: 260px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="card-heart"></div>
+
+    <h1>Jai Shri Ram</h1>
+
+    <p class="subtitle">
+      <q>
+        This application was crafted with devotion to bring the divine
+        words of Valmiki Ramayana closer to your heart. May the reading of
+        Sundarakanda bring peace, strength, and courage to your life.
+      </q>
+    </p>
+
+    <div class="pill-row">
+      <div class="pill">
+        <div class="pill-title">Devotion</div>
+        <div class="pill-text">Crafted with pure intent</div>
+      </div>
+
+      <div class="pill">
+        <div class="pill-title">Knowledge</div>
+        <div class="pill-text">Authentic translations</div>
+      </div>
+
+      <div class="pill">
+        <div class="pill-title">Peace</div>
+        <div class="pill-text">Serene reading experience</div>
+      </div>
+    </div>
+
+    <div class="bottom-row">
+      <button class="btn-main" onclick="goHome()">Start Again</button>
+      <button class="btn-ghost" onclick="shareApp()">Share App</button>
+    </div>
+  </div>
+
+  <script>
+    function goHome() {
+    // Redirect to your home / first page
+    // change index.html if your home page has a different name
+    window.location.href = "index.html";
+  }
+
+  function shareApp() {
+    const shareText =
+      "Jai Shri Ram 🙏\nExperience the divine Sundarakanda from Valmiki Ramayana.";
+
+    if (navigator.share) {
+      navigator.share({
+        title: "Jai Shri Ram",
+        text: shareText,
+        url: window.location.href
+      }).catch(err => console.log("Share cancelled"));
+    } else {
+      // fallback for desktop browsers
+      navigator.clipboard.writeText(
+        shareText + "\n" + window.location.href
+      );
+      alert("Link copied to clipboard!");
+    }
+  }
+</script>

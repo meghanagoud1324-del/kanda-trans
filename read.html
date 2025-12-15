@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shloka Reading</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Fonts -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Poppins", sans-serif;
+      background: radial-gradient(circle at top,
+                  #ffe9cf 0%, #fff7ea 35%, #fdf5f2 70%, #f7f2f7 100%);
+      color: #47271b;
+    }
+
+    .card {
+      background: #fffdf8;
+      width: min(900px, 95%);
+      border-radius: 18px;
+      box-shadow: 0 26px 60px rgba(158, 96, 45, 0.25);
+      padding: 32px 40px 40px;
+    }
+
+    .top-border {
+      height: 6px;
+      border-radius: 12px 12px 0 0;
+      background: linear-gradient(90deg, #ffb66a, #e96b20);
+      margin: -32px -40px 26px;
+    }
+
+    .title {
+      font-family: "Playfair Display", serif;
+      font-size: 2.1rem;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #9b8173;
+      margin-bottom: 26px;
+    }
+
+    .shloka-box {
+      background: #fdf7ef;
+      border-radius: 14px;
+      padding: 22px;
+      text-align: center;
+      margin-bottom: 22px;
+      font-family: "Playfair Display", serif;
+      font-size: 1.35rem;
+      color: #5a2f18;
+      line-height: 1.8;
+    }
+
+    .meaning-box {
+      background: #fffaf5;
+      border-radius: 14px;
+      padding: 20px;
+      font-size: 1rem;
+      color: #5b463a;
+      line-height: 1.7;
+    }
+
+    .nav {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .nav button {
+      border: none;
+      border-radius: 999px;
+      background: #d96621;
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 12px 32px;
+      box-shadow: 0 14px 30px rgba(187, 90, 36, 0.5);
+      cursor: pointer;
+    }
+
+    .nav button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .back-link {
+      margin-top: 24px;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    .back-link a {
+      color: #d46722;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    @media (max-width: 600px) {
+      .card { padding: 26px 20px 32px; }
+      .top-border { margin: -26px -20px 22px; }
+      .shloka-box { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <section class="card">
+    <div class="top-border"></div>
+
+    <h1 class="title">Sundarakanda</h1>
+    <p class="subtitle">Sacred verses from Valmiki Ramayana</p>
+
+    <div id="shlokaText" class="shloka-box">Loading shloka...</div>
+    <div id="meaningText" class="meaning-box">Loading meaning...</div>
+
+    <div class="nav">
+      <button id="prevBtn">← Previous</button>
+      <button id="nextBtn">Next →</button>
+    </div>
+
+    <div class="back-link">
+      <a href="translate.html">← Back to Selection</a>
+    </div>
+  </section>
+
+  <!-- DATA -->
+  <script src="shlokas.js"></script>
+
+  <!-- LOGIC -->
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    let index = parseInt(params.get("s")) || 0;
+    const lang = params.get("lang") || "en";
+
+    const shlokaBox = document.getElementById("shlokaText");
+    const meaningBox = document.getElementById("meaningText");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function render() {
+      const data = shlokas[index];
+      shlokaBox.textContent = data.sanskrit;
+      meaningBox.textContent = data.meaning[lang];
+
+      prevBtn.disabled = index === 0;
+
+      if (index === shlokas.length - 1) {
+        nextBtn.textContent = "Finish →";
+      } else {
+        nextBtn.textContent = "Next →";
+      }
+    }
+
+    prevBtn.onclick = () => {
+      if (index > 0) {
+        index--;
+        render();
+      }
+    };
+
+    nextBtn.onclick = () => {
+      if (index < shlokas.length - 1) {
+        index++;
+        render();
+      } else {
+        // Redirect to ending page
+        window.location.href = "end.html";
+      }
+    };
+
+    render();
+  </script>
+</body>
+</html>
