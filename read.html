@@ -7,7 +7,7 @@
 
   <!-- Google Fonts -->
   <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap">
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap">
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -19,13 +19,14 @@
       justify-content: center;
       font-family: "Poppins", sans-serif;
       background: radial-gradient(circle at top,
-                  #ffe9cf 0%, #fff7ea 35%, #fdf5f2 70%, #f7f2f7 100%);
+        #ffe9cf 0%, #fff7ea 35%, #fdf5f2 70%, #f7f2f7 100%);
       color: #47271b;
+      padding: 16px;
     }
 
     .card {
       background: #fffdf8;
-      width: min(900px, 95%);
+      width: min(900px, 100%);
       border-radius: 18px;
       box-shadow: 0 26px 60px rgba(158, 96, 45, 0.25);
       padding: 32px 40px 40px;
@@ -38,10 +39,10 @@
       margin: -32px -40px 26px;
     }
 
-    .title {
+    h1 {
       font-family: "Playfair Display", serif;
-      font-size: 2.1rem;
       text-align: center;
+      font-size: 2.1rem;
       margin-bottom: 6px;
     }
 
@@ -57,10 +58,9 @@
       border-radius: 14px;
       padding: 22px;
       text-align: center;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
       font-family: "Playfair Display", serif;
       font-size: 1.35rem;
-      color: #5a2f18;
       line-height: 1.8;
     }
 
@@ -69,15 +69,34 @@
       border-radius: 14px;
       padding: 20px;
       font-size: 1rem;
-      color: #5b463a;
       line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .controls button {
+      border: none;
+      border-radius: 999px;
+      background: #d96621;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 12px 26px;
+      cursor: pointer;
+      box-shadow: 0 14px 30px rgba(187, 90, 36, 0.5);
     }
 
     .nav {
-      margin-top: 30px;
       display: flex;
       justify-content: space-between;
       gap: 12px;
+      margin-top: 10px;
     }
 
     .nav button {
@@ -85,10 +104,8 @@
       border-radius: 999px;
       background: #d96621;
       color: #fff;
-      font-size: 0.95rem;
-      font-weight: 500;
+      font-size: 0.9rem;
       padding: 12px 32px;
-      box-shadow: 0 14px 30px rgba(187, 90, 36, 0.5);
       cursor: pointer;
     }
 
@@ -98,7 +115,7 @@
     }
 
     .back-link {
-      margin-top: 24px;
+      margin-top: 20px;
       text-align: center;
       font-size: 0.85rem;
     }
@@ -106,12 +123,10 @@
     .back-link a {
       color: #d46722;
       text-decoration: none;
-      font-weight: 500;
     }
 
     @media (max-width: 600px) {
       .card { padding: 26px 20px 32px; }
-      .top-border { margin: -26px -20px 22px; }
       .shloka-box { font-size: 1.2rem; }
     }
   </style>
@@ -121,12 +136,18 @@
   <section class="card">
     <div class="top-border"></div>
 
-    <h1 class="title">Sundarakanda</h1>
+    <h1>Sundarakanda</h1>
     <p class="subtitle">Sacred verses from Valmiki Ramayana</p>
 
     <div id="shlokaText" class="shloka-box">Loading shloka...</div>
     <div id="meaningText" class="meaning-box">Loading meaning...</div>
 
+    <!-- AUDIO CONTROLS -->
+    <div class="controls">
+      <button id="audioBtn">🔊 Play Audio</button>
+    </div>
+
+    <!-- NAVIGATION -->
     <div class="nav">
       <button id="prevBtn">← Previous</button>
       <button id="nextBtn">Next →</button>
@@ -150,6 +171,9 @@
     const meaningBox = document.getElementById("meaningText");
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
+    const audioBtn = document.getElementById("audioBtn");
+
+    let utterance;
 
     function render() {
       const data = shlokas[index];
@@ -157,13 +181,41 @@
       meaningBox.textContent = data.meaning[lang];
 
       prevBtn.disabled = index === 0;
+      nextBtn.textContent =
+        index === shlokas.length - 1 ? "Finish →" : "Next →";
 
-      if (index === shlokas.length - 1) {
-        nextBtn.textContent = "Finish →";
-      } else {
-        nextBtn.textContent = "Next →";
-      }
+      stopAudio();
     }
+
+    function playAudio() {
+      if (speechSynthesis.speaking) {
+        stopAudio();
+        return;
+      }
+
+      const text =
+        shlokas[index].sanskrit + ". " +
+        shlokas[index].meaning[lang];
+
+      utterance = new SpeechSynthesisUtterance(text);
+
+      if (lang === "hi") utterance.lang = "hi-IN";
+      else if (lang === "te") utterance.lang = "te-IN";
+      else utterance.lang = "en-IN";
+
+      utterance.rate = 0.85;
+      utterance.pitch = 1;
+
+      speechSynthesis.speak(utterance);
+      audioBtn.textContent = "⏹ Stop Audio";
+    }
+
+    function stopAudio() {
+      speechSynthesis.cancel();
+      audioBtn.textContent = "🔊 Play Audio";
+    }
+
+    audioBtn.addEventListener("click", playAudio);
 
     prevBtn.onclick = () => {
       if (index > 0) {
@@ -177,7 +229,6 @@
         index++;
         render();
       } else {
-        // Redirect to ending page
         window.location.href = "end.html";
       }
     };
