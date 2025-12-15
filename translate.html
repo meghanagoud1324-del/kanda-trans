@@ -1,199 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Begin Your Recitation</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Google Fonts -->
   <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap">
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap">
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       font-family: "Poppins", sans-serif;
-      background: radial-gradient(circle at top,
-                  #ffe9cf 0%, #fff7ea 35%, #fdf5f2 70%, #f7f2f7 100%);
-      color: #47271b;
+      background: #fff7ea;
     }
 
     .card {
-      background: #fffdf8;
-      width: min(900px, 95%);
-      border-radius: 18px;
-      box-shadow: 0 26px 60px rgba(158, 96, 45, 0.25);
-      padding: 32px 40px 40px;
+      width: 90%;
+      max-width: 900px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
     }
 
-    .card-top-border {
-      height: 6px;
-      border-radius: 12px 12px 0 0;
-      background: linear-gradient(90deg, #ffb66a, #e96b20);
-      margin: -32px -40px 26px;
-    }
-
-    .card-title {
+    h1 {
+      text-align: center;
       font-family: "Playfair Display", serif;
-      font-size: clamp(1.9rem, 3vw, 2.4rem);
-      text-align: center;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
     }
 
-    .card-subtitle {
+    p {
       text-align: center;
-      font-size: 0.95rem;
-      color: #9b8173;
-      margin-bottom: 28px;
+      color: #777;
+      margin-bottom: 30px;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 40px;
-      align-items: flex-start;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
     }
 
     .section-title {
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: #d46722;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 18px;
-    }
-
-    .section-title span.icon {
-      font-size: 1.3rem;
+      margin-bottom: 12px;
+      font-weight: 600;
+      color: #d4661f;
     }
 
     .shloka-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 14px;
-      margin-bottom: 20px;
+      gap: 10px;
     }
 
     .shloka-btn {
-      height: 60px;
-      border-radius: 14px;
+      padding: 12px;
       border: none;
-      background: #f7f0e4;
-      color: #7b5b3b;
-      font-size: 1.1rem;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      border-radius: 10px;
+      background: #eee;
       cursor: pointer;
+      font-size: 16px;
     }
 
     .shloka-btn.active {
-      background: #d8641f;
-      color: #ffffff;
-      box-shadow: 0 14px 28px rgba(196, 87, 27, 0.55);
-    }
-
-    .shloka-note {
-      font-size: 0.8rem;
-      color: #9a7b6c;
-      font-style: italic;
-      margin-top: 6px;
-    }
-
-    .lang-list {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+      background: #d4661f;
+      color: white;
     }
 
     .lang-card {
-      border-radius: 14px;
-      border: 2px solid transparent;
-      background: #f9f3ea;
-      padding: 14px 18px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #eee;
+      margin-bottom: 10px;
       cursor: pointer;
     }
 
     .lang-card.active {
-      background: #fffaf5;
-      border-color: #e0782c;
-    }
-
-    .lang-name {
-      font-family: "Playfair Display", serif;
-      font-size: 1.05rem;
-      margin-bottom: 3px;
-    }
-
-    .lang-desc {
-      font-size: 0.85rem;
-      color: #a18b7a;
-    }
-
-    .card-footer {
-      margin-top: 30px;
-      display: flex;
-      justify-content: center;
+      background: #d4661f;
+      color: white;
     }
 
     .start-btn {
+      margin-top: 30px;
+      width: 100%;
+      padding: 14px;
       border: none;
       border-radius: 999px;
-      background: #d96621;
-      color: #fff;
-      font-size: 1.05rem;
-      font-weight: 500;
-      padding: 16px 70px;
-      box-shadow: 0 16px 36px rgba(187, 90, 36, 0.6);
+      background: #d4661f;
+      color: white;
+      font-size: 16px;
       cursor: pointer;
     }
 
-    .start-btn span.arrow {
-      margin-left: 8px;
-    }
-
-    @media (max-width: 720px) {
-      .card {
-        padding: 26px 20px 32px;
-      }
-
-      .card-top-border {
-        margin: -26px -20px 22px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-        gap: 26px;
-      }
+    @media (max-width: 700px) {
+      .grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 
 <body>
-  <section class="card">
-    <div class="card-top-border"></div>
-
-    <h1 class="card-title">Begin Your Recitation</h1>
-    <p class="card-subtitle">Select a Shloka and your preferred language</p>
+  <div class="card">
+    <h1>Begin Your Recitation</h1>
+    <p>Select a shloka and language</p>
 
     <div class="grid">
+      <!-- SHLOKA -->
       <div>
-        <div class="section-title">
-          <span class="icon">📖</span>
-          <span>Select Shloka</span>
-        </div>
-
+        <div class="section-title">📖 Select Shloka</div>
         <div class="shloka-grid">
           <button class="shloka-btn active">1</button>
           <button class="shloka-btn">2</button>
@@ -206,72 +126,53 @@
           <button class="shloka-btn">9</button>
           <button class="shloka-btn">10</button>
         </div>
-
-        <p class="shloka-note">*Showing first 10 Shlokas of Sundarakanda</p>
       </div>
 
+      <!-- LANGUAGE -->
       <div>
-        <div class="section-title">
-          <span class="icon">🌐</span>
-          <span>Select Language</span>
-        </div>
-
-        <div class="lang-list">
-          <div class="lang-card active">
-            <div class="lang-name">English</div>
-            <div class="lang-desc">Translation & Meaning</div>
-          </div>
-
-          <div class="lang-card">
-            <div class="lang-name">Hindi</div>
-            <div class="lang-desc">हिंदी अनुवाद</div>
-          </div>
-
-          <div class="lang-card">
-            <div class="lang-name">Telugu</div>
-            <div class="lang-desc">తెలుగు అనువాదం</div>
-          </div>
-        </div>
+        <div class="section-title">🌐 Select Language</div>
+        <div class="lang-card active" data-lang="en">English</div>
+        <div class="lang-card" data-lang="hi">Hindi</div>
+        <div class="lang-card" data-lang="te">Telugu</div>
       </div>
     </div>
 
-    <div class="card-footer">
-      <button class="start-btn">
-        Start Reading <span class="arrow">→</span>
-      </button>
-    </div>
-  </section>
+    <button class="start-btn">Start Reading</button>
+  </div>
 
-  <!-- REQUIRED SCRIPT -->
-  <script src="shlokas.js"></script>
+  <!-- ✅ CORRECT JS -->
   <script>
     let selectedShloka = 0;
     let selectedLang = "en";
 
-    document.querySelectorAll(".shloka-btn").forEach((btn, index) => {
+    const shlokaBtns = document.querySelectorAll(".shloka-btn");
+    const langCards = document.querySelectorAll(".lang-card");
+    const startBtn = document.querySelector(".start-btn");
+
+    // Shloka selection
+    shlokaBtns.forEach((btn, index) => {
       btn.addEventListener("click", () => {
-        document.querySelectorAll(".shloka-btn")
-          .forEach(b => b.classList.remove("active"));
+        shlokaBtns.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         selectedShloka = index;
       });
     });
 
-    document.querySelectorAll(".lang-card").forEach(card => {
+    // Language selection
+    langCards.forEach(card => {
       card.addEventListener("click", () => {
-        document.querySelectorAll(".lang-card")
-          .forEach(c => c.classList.remove("active"));
+        langCards.forEach(c => c.classList.remove("active"));
         card.classList.add("active");
-
-        const lang = card.querySelector(".lang-name").innerText;
-        selectedLang = lang === "Hindi" ? "hi" : lang === "Telugu" ? "te" : "en";
+        selectedLang = card.dataset.lang;
       });
     });
 
-    document.querySelector(".start-btn").addEventListener("click", () => {
-window.location.href = read.html?s=${selectedShloka}&lang=${selectedLang};
-
+    // Start
+    startBtn.addEventListener("click", () => {
+      window.location.href =
+        read.html?s=${selectedShloka}&lang=${selectedLang};
     });
   </script>
 </body>
 </html>
+   
